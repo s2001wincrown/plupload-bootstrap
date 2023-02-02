@@ -18,9 +18,11 @@
                             '<div class="plupload_logo"> </div>' +
                             '<div class="plupload_header_title">' + _("Select files") + '</div>' +
                             '<div class="plupload_header_text">' + _("Add files to the upload queue and click the start button.") + '</div>' +
-                            '<div class="plupload_view_switch btn-group" data-toggle="buttons">' +
-                                '<label class="btn btn-primary btn-sm active plupload_button" for="'+obj.id+'_view_list" data-view="list"><input type="radio" id="'+obj.id+'_view_list" name="view_mode_'+obj.id+'" checked="checked" />' + _('List') + '</label>' +
-                                '<label class="btn btn-primary btn-sm plupload_button"  for="'+obj.id+'_view_thumbs" data-view="thumbs"><input type="radio" id="'+obj.id+'_view_thumbs" name="view_mode_'+obj.id+'" />' + _('Thumbnails') + '</label>' +
+                            '<div class="plupload_view_switch btn-group" role="group" data-toggle="buttons" aria-label="radio toggle button group">' +
+								'<input type="radio" class="btn-check" id="'+obj.id+'_view_list" name="view_mode_'+obj.id+'" autocomplete="off" checked>' +
+                                '<label class="btn btn-outline-primary btn-sm plupload_button" for="'+obj.id+'_view_list" data-view="list">' + _('List') + '</label>' +
+								'<input type="radio" class="btn-check" id="'+obj.id+'_view_thumbs" name="view_mode_'+obj.id+'" autocomplete="off">' +
+                                '<label class="btn btn-outline-primary btn-sm plupload_button"  for="'+obj.id+'_view_thumbs" data-view="thumbs">' + _('Thumbnails') + '</label>' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
@@ -221,7 +223,7 @@
 		}
 
 		this.filelist.on('click', function(e) {
-			if ($(e.target).hasClass('glyphicon-remove')) {
+			if ($(e.target).hasClass('fa-times')) {
 				self.removeFile($(e.target).closest('.plupload_file').attr('id'));
 				e.preventDefault();
 			}
@@ -593,14 +595,14 @@
 		var popup = $(
             '<div class="plupload_message alert alert-dismissible" role="alert">' +
               '<button type="button" class="plupload_message_close close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>' +
-              '<p><span class="glyphicon"></span>&nbsp;' + message + '</p>' +
+              '<p><span class="fas"></span>&nbsp;' + message + '</p>' +
             '</div>'
 		);
 					
 		popup
 			.addClass('alert-' + (type === 'error' ? 'danger' : 'warning'))
-			.find('.glyphicon')
-				.addClass(type === 'error' ? 'glyphicon-warning-sign' : 'glyphicon-info-sign')
+			.find('.fas')
+				.addClass(type === 'error' ? 'fa-exclamation-triangle' : 'fa-info-circle')
 				.end()
 			.find('.plupload_message_close')
 				.click(function() {
@@ -699,7 +701,7 @@
 		switch (file.status) {
 			case plupload.DONE: 
 				actionClass = 'bg-success plupload_done';
-				iconClass = 'plupload_action_icon glyphicon glyphicon-remove';
+				iconClass = 'plupload_action_icon fas fa-times';
                 $file
 					.find('.plupload_file_progress .progress-bar')
                         .removeClass("progress-bar-warning")
@@ -708,12 +710,12 @@
 			
 			case plupload.FAILED:
 				actionClass = 'bg-danger plupload_failed';
-				iconClass = 'plupload_action_icon glyphicon glyphicon-remove';
+				iconClass = 'plupload_action_icon fas fa-times';
 				break;
 
 			case plupload.QUEUED:
 				actionClass = 'bg-info plupload_delete';
-				iconClass = 'plupload_action_icon glyphicon glyphicon-remove';
+				iconClass = 'plupload_action_icon fas fa-times';
                 $file
 					.find('.plupload_file_progress .progress-bar')
                     .attr("aria-valuenow",0)
@@ -722,7 +724,7 @@
 
 			case plupload.UPLOADING:
 				actionClass = 'bg-warning plupload_uploading';
-				iconClass = 'plupload_action_icon glyphicon glyphicon-cloud-upload';
+				iconClass = 'plupload_action_icon fas fa-cloud-upload';
 				
 				// scroll uploading file into the view if its bottom boundary is out of it
 				var scroller = $('.plupload_scroll', this.container)
@@ -919,7 +921,7 @@
 				'<span class="plupload_file_name_wrapper">%name% </span>' +
 			'</div>' +						
 			'<div class="plupload_file_action">' +
-				'<div class="plupload_action_icon glyphicon glyphicon-remove"> </div>' +
+				'<div class="plupload_action_icon fas fa-times"></div>' +
 			'</div>' +
 			'<div class="plupload_file_size">%size% </div>' +
 			'<div class="plupload_file_fields"> </div>' +
@@ -1003,6 +1005,7 @@
 		plupload.each(['list', 'thumbs'], function(view) {
 			if (!self.options.views[view]) {
 				switcher.find('[for="' + self.id + '_view_' + view + '"], #'+ self.id +'_view_' + view).remove();
+				$('#' + self.id + '_view_' + view).remove();
 			}
 		});
 
@@ -1029,6 +1032,7 @@
 					.click(function(e) {
 						view = $(this).data('view');
 						self._viewChanged(view);
+						$('#' + self.id + '_view_' + view).prop("checked", true);
 						e.preventDefault(); // avoid auto scrolling to widget in IE and FF (see #850)
 					});
 
