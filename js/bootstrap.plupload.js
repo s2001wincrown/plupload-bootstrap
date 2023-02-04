@@ -12,8 +12,8 @@
 
         obj.html(
             '<div class="plupload_wrapper">' +
-                '<div class="plupload_container panel panel-default">' +
-                    '<div class="plupload_header panel-heading">' +
+                '<div class="plupload_container card">' +
+                    '<div class="plupload_header card-header">' +
                         '<div class="plupload_header_content">' +
                             '<div class="plupload_logo"> </div>' +
                             '<div class="plupload_header_title">' + _("Select files") + '</div>' +
@@ -42,7 +42,7 @@
                         '<div class="plupload_clearer">&nbsp;</div>' +
                     '</div>' +
 
-                    '<table class="plupload_filelist plupload_filelist_footer panel-footer">' +
+                    '<table class="plupload_filelist plupload_filelist_footer card-footer">' +
                     '<tr>' +
                         '<td class="plupload_cell plupload_file_name">' +
                             '<div class="plupload_buttons"><!-- Visible -->' +
@@ -714,7 +714,7 @@
 				break;
 
 			case plupload.QUEUED:
-				actionClass = 'bg-info plupload_delete';
+				actionClass = 'bg-info bg-gradient plupload_delete';
 				iconClass = 'plupload_action_icon fas fa-times';
                 $file
 					.find('.plupload_file_progress .progress-bar')
@@ -905,7 +905,7 @@
     BSpupload.prototype._addFiles = function(files) {
 		var self = this, file_html, html = '';
 
-		file_html = '<li class="plupload_file plupload_file_loading plupload_delete bg-info" id="%id%" style="width:%thumb_width%px;">' +
+		file_html = '<li class="plupload_file plupload_file_loading plupload_delete bg-info bg-gradient" id="%id%" style="width:%thumb_width%px;">' +
 			'<div class="plupload_file_thumb" style="width:%thumb_width%px;height:%thumb_height%px;">' +
 				'<div class="plupload_file_dummy" style="line-height:%thumb_height%px;"><span>%ext% </span></div>' +
 			'</div>' +
