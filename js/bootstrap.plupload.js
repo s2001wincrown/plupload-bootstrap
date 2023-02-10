@@ -20,9 +20,9 @@
                             '<div class="plupload_header_text">' + _("Add files to the upload queue and click the start button.") + '</div>' +
                             '<div class="plupload_view_switch btn-group" role="group" data-toggle="buttons" aria-label="radio toggle button group">' +
 								'<input type="radio" class="btn-check" id="'+obj.id+'_view_list" name="view_mode_'+obj.id+'" autocomplete="off" checked>' +
-                                '<label class="btn btn-outline-primary btn-sm plupload_button" for="'+obj.id+'_view_list" data-view="list">' + _('List') + '</label>' +
+                                '<label class="btn btn-outline-primary btn-sm plupload_button" for="'+obj.id+'_view_list" data-view="list"><i class="fas fa-list"></i></label>' +
 								'<input type="radio" class="btn-check" id="'+obj.id+'_view_thumbs" name="view_mode_'+obj.id+'" autocomplete="off">' +
-                                '<label class="btn btn-outline-primary btn-sm plupload_button"  for="'+obj.id+'_view_thumbs" data-view="thumbs">' + _('Thumbnails') + '</label>' +
+                                '<label class="btn btn-outline-primary btn-sm plupload_button"  for="'+obj.id+'_view_thumbs" data-view="thumbs"><i class="fas fa-image"></i></label>' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
@@ -46,7 +46,7 @@
                     '<tr>' +
                         '<td class="plupload_cell plupload_file_name">' +
                             '<div class="plupload_buttons"><!-- Visible -->' +
-                                '<a class="btn btn-primary btn-sm plupload_button plupload_add">' + _("Add Files") + '</a>&nbsp;' +
+                                '<a class="btn btn-primary btn-sm plupload_button plupload_add"><i class="fas fa-plus-circle"></i> <span class="ui-button-text">' + _("Add Files") + '</span></a>&nbsp;' +
                                 '<a class="btn btn-primary btn-sm plupload_button plupload_start">' + _("Start Upload") + '</a>&nbsp;' +
                                 '<a class="btn btn-primary btn-sm plupload_button plupload_stop plupload_hidden">'+_("Stop Upload") + '</a>&nbsp;' +
                             '</div>' +
@@ -173,7 +173,7 @@
         multiple_queues: true, // re-use widget by default
         dragdrop : true, 
         autostart: false,
-        /*sortable: false,*/ // no sort for bootstrap
+        sortable: false,
         rename: false
     }
 
@@ -367,9 +367,9 @@
 			self._trigger('selected', null, { up: up, files: files } );
 
 			// re-enable sortable
-			/*if (self.options.sortable && $.ui.sortable) {
+			if (self.options.sortable && Sortable) {
 				self._enableSortingList();	
-			}*/
+			}
 
 			self._trigger('updatelist', null, { filelist: self.filelist });
 			
@@ -383,9 +383,9 @@
 		
 		uploader.bind('FilesRemoved', function(up, files) {
 			// destroy sortable if enabled
-			/*if ($.ui.sortable && self.options.sortable) {
+			if (self.options.sortable && Sortable) {
 				$('tbody', self.filelist).sortable('destroy');	
-			}*/
+			}
 
 			$.each(files, function(i, file) {
 				$('#' + file.id).toggle("highlight", function() {
@@ -393,12 +393,12 @@
 				});
 			});
 			
-			/*if (up.files.length) {
+			if (up.files.length) {
 				// re-initialize sortable
-				if (self.options.sortable && $.ui.sortable) {
+				if (self.options.sortable && Sortable) {
 					self._enableSortingList();	
 				}
-			}*/
+			}
 
 			self._trigger('updatelist', null, { filelist: self.filelist });
 			self._trigger('removed', null, { up: up, files: files } );
@@ -677,6 +677,9 @@
 				this.browse_button.removeClass("disabled");
 				up.disableBrowse(false);
 			}
+			
+			// have a helper class on a container expressing whether it has files queued or not
+			this.container.toggleClass('plupload_files_queued', up.files.length);
 
 			this._updateTotalProgress();
 		}
@@ -1093,20 +1096,17 @@
 	}
     
     BSpupload.prototype._enableSortingList = function() {
-        /**
-         * no sort for bootstrap
-         */
-		/*var self = this;
+		var self = this;
 		
 		if ($('.plupload_file', this.filelist).length < 2) {
 			return;	
-		}*/
+		}
 
 		// destroy sortable if enabled
-		/*$('tbody', this.filelist).sortable('destroy');	*/
+		$('tbody', this.filelist).sortable('destroy');
 		
 		// enable		
-		/*this.filelist.sortable({
+		this.filelist.sortable({
 			items: '.plupload_delete',
 			
 			cancel: 'object, .plupload_clearer',
@@ -1124,7 +1124,7 @@
 				// re-populate files array				
 				Array.prototype.splice.apply(self.uploader.files, files);	
 			}
-		});		*/
+		});
 	}
     
     // MODAL PLUGIN DEFINITION
