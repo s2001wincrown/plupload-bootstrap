@@ -2,7 +2,6 @@
   'use strict';
 
     var uploaders = {};	
-    var o = mOxie;
     function _(str) {
         return plupload.translate(str) || str;
     }
@@ -85,10 +84,7 @@
         this.widgetEventPrefix = ''
 	    this.contents_bak = ''
 	    this.FILE_COUNT_ERROR = -9001
-        
-        
-        
-        
+
         var id = this.element.attr('id');
 		if (!id) {
 			id = plupload.guid();
@@ -266,19 +262,19 @@
 				
 			switch (err.code) {
 				case plupload.FILE_EXTENSION_ERROR:
-					details = o.sprintf(_("File: %s"), err.file.name);
+					details = plupload.sprintf(_("File: %s"), err.file.name);
 					break;
 				
 				case plupload.FILE_SIZE_ERROR:
-					details = o.sprintf(_("File: %s, size: %d, max file size: %d"), err.file.name,  plupload.formatSize(err.file.size), plupload.formatSize(plupload.parseSize(up.getOption('filters').max_file_size)));
+					details = plupload.sprintf(_("File: %s, size: %d, max file size: %d"), err.file.name,  plupload.formatSize(err.file.size), plupload.formatSize(plupload.parseSize(up.getOption('filters').max_file_size)));
 					break;
 
 				case plupload.FILE_DUPLICATE_ERROR:
-					details = o.sprintf(_("%s already present in the queue."), err.file.name);
+					details = plupload.sprintf(_("%s already present in the queue."), err.file.name);
 					break;
 					
 				case self.FILE_COUNT_ERROR:
-					details = o.sprintf(_("Upload element accepts only %d file(s) at a time. Extra files were stripped."), up.getOption('filters').max_file_count || 0);
+					details = plupload.sprintf(_("Upload element accepts only %d file(s) at a time. Extra files were stripped."), up.getOption('filters').max_file_count || 0);
 					break;
 				
 				case plupload.IMAGE_FORMAT_ERROR :
@@ -291,7 +287,7 @@
 				
 				/* // This needs a review
 				case plupload.IMAGE_DIMENSIONS_ERROR :
-					details = o.sprintf(_('Resoultion out of boundaries! <b>%s</b> runtime supports images only up to %wx%hpx.'), up.runtime, up.features.maxWidth, up.features.maxHeight);
+					details = plupload.sprintf(_('Resoultion out of boundaries! <b>%s</b> runtime supports images only up to %wx%hpx.'), up.runtime, up.features.maxWidth, up.features.maxHeight);
 					break;	*/
 											
 				case plupload.HTTP_ERROR:
@@ -594,8 +590,8 @@
 	BSpupload.prototype.notify = function(type, message) {
 		var popup = $(
             '<div class="plupload_message alert alert-dismissible" role="alert">' +
-              '<button type="button" class="plupload_message_close close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>' +
               '<p><span class="fas"></span>&nbsp;' + message + '</p>' +
+			  '<button type="button" class="plupload_message_close btn-close" data-bs-dismiss="alert"></button>' +
             '</div>'
 		);
 					
@@ -653,7 +649,7 @@
 				up.disableBrowse();
 			}
 							
-			$('.plupload_upload_status', this.element).html(o.sprintf(_('Uploaded %d/%d files'), up.total.uploaded, up.files.length));
+			$('.plupload_upload_status', this.element).html(plupload.sprintf(_('Uploaded %d/%d files'), up.total.uploaded, up.files.length));
 			$('.plupload_header_content', this.element).addClass('plupload_header_content_bw');
 		} 
 		else if (plupload.STOPPED === up.state) {
@@ -687,7 +683,7 @@
 		if (up.total.queued === 0) {
 			$('.ui-button-text', this.browse_button).html(_('Add Files'));
 		} else {
-			$('.ui-button-text', this.browse_button).html(o.sprintf(_('%d files queued'), up.total.queued));
+			$('.ui-button-text', this.browse_button).html(plupload.sprintf(_('%d files queued'), up.total.queued));
 		}
 
 		up.refresh();
@@ -707,8 +703,8 @@
 				iconClass = 'plupload_action_icon fas fa-times';
                 $file
 					.find('.plupload_file_progress .progress-bar')
-                        .removeClass("progress-bar-warning")
-                        .addClass("progress-bar-success")
+                        .removeClass("bg-warning")
+                        .addClass("bg-success")
 				break;
 			
 			case plupload.FAILED:
@@ -746,7 +742,7 @@
 						.html(file.percent + '%')
 						.end()
 					.find('.plupload_file_progress .progress-bar')
-                        .addClass("progress-bar-warning")
+                        .addClass("bg-warning")
                         .attr("aria-valuenow",file.percent)
 						.css('width', file.percent + '%')
 						.end()
@@ -767,8 +763,9 @@
 
 		// Scroll to end of file list
 		this.filelist[0].scrollTop = this.filelist[0].scrollHeight;
+		
 		var uppercent = up.total.percent+"%";
-		this.progressbar.find(".progress-bar").addClass("progress-bar-warning").attr("aria-valuenow",up.total.percent).width(uppercent);
+		this.progressbar.find(".progress-bar").addClass("bg-warning").attr("aria-valuenow",up.total.percent).width(uppercent);
 		this.progressbar.find(".sr-only").html(uppercent);
 		this.element
 			.find('.plupload_total_status')
@@ -778,7 +775,7 @@
 				.html(plupload.formatSize(up.total.size))
 				.end()
 			.find('.plupload_upload_status')
-				.html(o.sprintf(_('Uploaded %d/%d files'), up.total.uploaded, up.files.length));
+				.html(plupload.sprintf(_('Uploaded %d/%d files'), up.total.uploaded, up.files.length));
 	}
     
     BSpupload.prototype._displayThumbs = function() {
@@ -857,7 +854,7 @@
 
 
 		function preloadThumb(file, cb) {
-			var img = new o.Image();
+			var img = new plupload.Image();
 
 			img.onload = function() {
 				var thumb = $('#' + file.id + ' .plupload_file_thumb', self.filelist).html('');
@@ -865,8 +862,8 @@
 					width:  self.options.thumb_width, 
 					height: self.options.thumb_height, 
 					crop: true,
-					swf_url: o.resolveUrl(self.options.flash_swf_url),
-					xap_url: o.resolveUrl(self.options.silverlight_xap_url)
+					swf_url: plupload.resolveUrl(self.options.flash_swf_url),
+					xap_url: plupload.resolveUrl(self.options.silverlight_xap_url)
 				});
 			};
 
@@ -935,7 +932,8 @@
 		}
 
 		$.each(files, function(i, file) {
-			var ext = o.Mime.getFileExtension(file.name) || 'none';
+			var m = file.name.match(/\.([^.]+)$/);
+			var ext = m && m[1].toLowerCase() || 'none';
 
 			html += file_html.replace(/%(\w+)%/g, function($0, $1) {
 				switch ($1) {
@@ -988,10 +986,10 @@
 		} 
 	
 		// ugly fix for IE6 - make content area stretchable
-		if (o.Env.browser === 'IE' && o.Env.version < 7) {
+		if (plupload.ua.browser === 'IE' && plupload.ua.version < 7) {
 			this.content.attr('style', 'height:expression(document.getElementById("' + this.id + '_container' + '").clientHeight - ' + (view === 'list' ? 132 : 102) + ')');
 		}
-
+		
 		this.container.removeClass('plupload_view_list plupload_view_thumbs').addClass('plupload_view_' + view); 
 		this.view_mode = view;
 		this._trigger('viewchanged', null, { view: view });

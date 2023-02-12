@@ -18,7 +18,7 @@
 <script src="./Sortable/jquery-sortable.js"></script>
 <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<script type="text/javascript" src="plupload-2.1.2/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="plupload-3.1.5/js/plupload.full.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.plupload.js"></script>
 
 
@@ -30,7 +30,7 @@
 <p>plupload has a UI based on Jquery UI <a href="http://plupload.com/example_jquery_ui.php">http://plupload.com/example_jquery_ui.php</a></p>
 <p>But if we use Bootstrap instead of Jqery UI? So I have made this <a href="">Bootstrap UI for plupload</a></p>
 
-<form method="post" action="plupload-2.1.2/examples/dump.php"
+<form method="post" action="plupload-3.1.5/examples/dump.php"
  enctype="multipart/form-data">
 <div id="uploader">
     <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
@@ -42,7 +42,7 @@
 
 <div id="uploader1" 
      data-toggle="bsupload"
-     data-url="plupload-2.1.2/examples/upload.php" 
+     data-url="plupload-3.1.5/examples/upload.php" 
      data-multipart_params='{"token": "xxxxx","param1":"param1Val","param2":"param2Val"}'
      data-max_file_count="20"
      data-max_file_size="10mb"
@@ -59,8 +59,8 @@
 			"thumbs": true,
 			"active": "thumbs"
 		}'
-     data-flash_swf_url="plupload-2.1.2/js/Moxie.swf"
-     silverlight_xap_url="plupload-2.1.2/js/Moxie.xap"
+     data-flash_swf_url="plupload-3.1.5/js/Moxie.swf"
+     silverlight_xap_url="plupload-3.1.5/js/Moxie.xap"
      >
     <p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
 </div>
@@ -70,7 +70,7 @@ $(function() {
     $("#uploader").bsupload({
 		// General settings
 		runtimes : 'html5,flash,silverlight,html4',
-		url : 'plupload-2.1.2/examples/upload.php',
+		url : 'plupload-3.1.5/examples/upload.php',
         multipart_params: {
             token: 'xxxxx',
             param1:'param1Val',
@@ -112,10 +112,10 @@ $(function() {
 			active: 'thumbs'
 		},
 		// Flash settings
-		flash_swf_url : 'plupload-2.1.2/js/Moxie.swf',
+		flash_swf_url : 'plupload-3.1.5/js/Moxie.swf',
 
 		// Silverlight settings
-		silverlight_xap_url : 'plupload-2.1.2/js/Moxie.xap',
+		silverlight_xap_url : 'plupload-3.1.5/js/Moxie.xap',
 	}).on("beforeupload",function(event, args) {
         console.info("before upload");
     }).on("complete",function(event, args) {
