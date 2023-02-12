@@ -46,7 +46,7 @@
 .plupload_logo {
 	width: 40px;
 	height: 40px;
-	background: url('../plupload-2.1.2/js/jquery.ui.plupload/img/plupload.png') no-repeat 0 0;
+	background: url('../plupload-3.1.5/js/jquery.ui.plupload/img/plupload.png') no-repeat 0 0;
 	position: absolute;
 	top: 8px;
 	left: 8px;
@@ -123,7 +123,7 @@
 }
 
 .plupload_file_loading .plupload_file_thumb {
-	background: #eee url(../plupload-2.1.2/js/jquery.ui.plupload/img/loading.gif) center no-repeat;
+	background: #eee url(../plupload-3.1.5/js/jquery.ui.plupload/img/loading.gif) center no-repeat;
 }
 
 .plupload_file_name {
