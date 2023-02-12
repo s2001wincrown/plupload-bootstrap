@@ -177,7 +177,7 @@
         rename: false
     }
 
-    BSpupload.VERSION  = '1.0.0'
+    BSpupload.VERSION  = '2.0.0'
 
     BSpupload.prototype._trigger = function( type, event, data ) {
         var prop, orig,
@@ -679,7 +679,7 @@
 			}
 			
 			// have a helper class on a container expressing whether it has files queued or not
-			this.container.toggleClass('plupload_files_queued', up.files.length);
+			this.container.toggleClass('plupload_files_queued', up.files.length>0);
 
 			this._updateTotalProgress();
 		}
